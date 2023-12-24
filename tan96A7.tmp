@@ -12,9 +12,11 @@ transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 1.39241, 0, 2.9452)
 script = ExtResource("1_lgp2k")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 mesh = ExtResource("1_ka2fd")
 surface_material_override/0 = SubResource("StandardMaterial3D_60pbj")
 
 [node name="MoveComponent" type="Node3D" parent="."]
 script = ExtResource("3_0kx61")
+SPEED = null
+ROT_SPEED = null
+MIN_ANGLE_MOVE = null

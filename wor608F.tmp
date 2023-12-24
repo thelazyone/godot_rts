@@ -1,28 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://by6usbkw54p0d"]
+[gd_scene load_steps=12 format=3 uid="uid://by6usbkw54p0d"]
 
 [ext_resource type="Script" path="res://ObjectsScripts/CameraBase.gd" id="1_a4iqy"]
 [ext_resource type="Script" path="res://world.gd" id="1_gmsn8"]
 [ext_resource type="Script" path="res://ObjectsScripts/RectSelection.gd" id="2_qyexx"]
-[ext_resource type="Shader" path="res://Shaders/edges_v2.gdshader" id="3_qry1y"]
 [ext_resource type="Script" path="res://Actors.gd" id="3_u47dp"]
 [ext_resource type="PackedScene" uid="uid://cxb341ma827fc" path="res://tank.tscn" id="4_t1n11"]
 [ext_resource type="Shader" path="res://Shaders/pixel_1.gdshader" id="6_vjooq"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4qdle"]
-render_priority = 0
-shader = ExtResource("3_qry1y")
-shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/light_color = Color(1, 1, 1, 1)
-shader_parameter/check_range = 2.055
-shader_parameter/spacing_threhsold = 1.392
-shader_parameter/normal_threshold = 0.0
-shader_parameter/line_thickness = 0.1
-shader_parameter/edge_intensity = 2.197
-shader_parameter/ridge_intensity = 0.0
-shader_parameter/hardness = 0.0
-
-[sub_resource type="QuadMesh" id="QuadMesh_q20lf"]
-material = SubResource("ShaderMaterial_4qdle")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ojloa"]
 
@@ -40,11 +23,11 @@ border_color = Color(0, 0.317647, 0.968627, 0.0980392)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t1dld"]
 shader = ExtResource("6_vjooq")
-shader_parameter/pixelSize = 4
+shader_parameter/pixelSize = 2
 shader_parameter/pixelOffset = Vector2(0, 0)
 shader_parameter/colorRange = 16
-shader_parameter/hardness = 0.938
-shader_parameter/dither = 0.376
+shader_parameter/hardness = 0.5
+shader_parameter/dither = 0.5
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_gmsn8")
@@ -56,10 +39,6 @@ script = ExtResource("1_a4iqy")
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 9.11868, 8.79231)
 projection = 1
 size = 10.0
-
-[node name="ToonShader" type="MeshInstance3D" parent="CameraBase/Camera3D"]
-transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0.342816, -2.72959)
-mesh = SubResource("QuadMesh_q20lf")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_ojloa")
@@ -90,12 +69,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_a4ykn")
 script = ExtResource("3_u47dp")
 
 [node name="Tank" parent="Actors" instance=ExtResource("4_t1n11")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 1.39241, 0, 2.9452)
 
 [node name="Pixelation" type="CanvasLayer" parent="."]
 
 [node name="PixelScreen" type="ColorRect" parent="Pixelation"]
-visible = false
 material = SubResource("ShaderMaterial_t1dld")
 offset_right = 1151.0
 offset_bottom = 648.0

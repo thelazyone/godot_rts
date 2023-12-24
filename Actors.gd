@@ -22,4 +22,4 @@ func _process(delta):
 
 func GoTo(coordinate):
 	# For now just printing on console
-	get_node("Tank").position = m_Camera.coords_on_xz(coordinate)
+	get_node("Tank").command_move(m_Camera.coords_on_xz(coordinate))
