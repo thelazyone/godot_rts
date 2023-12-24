@@ -2,4 +2,4 @@
 .godot/
 
 # Ignoring the .tmp
-*.tmp
+./*.tmp
