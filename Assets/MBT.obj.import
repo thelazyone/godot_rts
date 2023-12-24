@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dxi0144vh5sgq"
+path="res://.godot/imported/MBT.obj-8382a71ca55218e52bf91e1e9dccf810.mesh"
+
+[deps]
+
+files=["res://.godot/imported/MBT.obj-8382a71ca55218e52bf91e1e9dccf810.mesh"]
+
+source_file="res://Assets/MBT.obj"
+dest_files=["res://.godot/imported/MBT.obj-8382a71ca55218e52bf91e1e9dccf810.mesh", "res://.godot/imported/MBT.obj-8382a71ca55218e52bf91e1e9dccf810.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

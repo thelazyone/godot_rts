@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://by6usbkw54p0d"]
+
+[ext_resource type="Script" path="res://ObjectsScripts/CameraBase.gd" id="1_a4iqy"]
+[ext_resource type="Script" path="res://ObjectsScripts/RectSelection.gd" id="2_qyexx"]
+[ext_resource type="Script" path="res://Actors.gd" id="3_u47dp"]
+[ext_resource type="PackedScene" uid="uid://cxb341ma827fc" path="res://tank.tscn" id="4_t1n11"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_ojloa"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_twrfu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_mbfrx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a4ykn"]
+bg_color = Color(0.960784, 0.960784, 0.960784, 0.368627)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.317647, 0.968627, 0.0980392)
+
+[node name="World" type="Node3D"]
+
+[node name="CameraBase" type="Node3D" parent="."]
+script = ExtResource("1_a4iqy")
+
+[node name="Camera3D" type="Camera3D" parent="CameraBase"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 9.11868, 8.79231)
+projection = 1
+size = 10.0
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_ojloa")
+
+[node name="Plane" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("PlaneMesh_twrfu")
+
+[node name="Cube" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(0.99997, -0.00310444, 0.00710911, 0.0032272, 0.999845, -0.0173201, -0.00705423, 0.0173425, 0.999825, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_mbfrx")
+skeleton = NodePath("../Plane")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.8649, 0)
+light_energy = 11.058
+omni_range = 23.7319
+
+[node name="UnitsControl" type="CanvasLayer" parent="."]
+script = ExtResource("2_qyexx")
+
+[node name="Rect" type="Panel" parent="UnitsControl"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_a4ykn")
+
+[node name="Actors" type="Node3D" parent="."]
+script = ExtResource("3_u47dp")
+
+[node name="Tank" parent="Actors" instance=ExtResource("4_t1n11")]
