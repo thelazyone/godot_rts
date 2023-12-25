@@ -9,6 +9,7 @@ enum ActionStates {
 	
 var state = ActionStates.Idle
 var target = Vector2(0, 0)
+var target_obj = null
 var plane_direction = 0
 var plane_position = Vector2(0, 0)
 
@@ -18,6 +19,7 @@ var plane_position = Vector2(0, 0)
 @export var MIN_ANGLE_MOVE = PI / 4
 
 var target_distance_threshold = 0.1
+var interaction_range = 0.5
 
 # Temp function, i'm sure there's a prebuild one.
 func diff_angles(angle1, angle2):
@@ -25,7 +27,11 @@ func diff_angles(angle1, angle2):
 
 
 # Movement towards target - TODO check for collisions using Godot tools
-func _move_towards(target, delta):
+func _move_towards(target, delta, threshold):
+	
+	# If the distance is small enough, skipping the move.
+	if plane_position.distance_to(target) < target_distance_threshold:
+		return false
 	
 	# First rotating if not rotated.
 	var target_direction = plane_position.angle_to_point(target)
@@ -38,7 +44,13 @@ func _move_towards(target, delta):
 		plane_position.y +=  SPEED * sin(plane_direction) * delta
 	
 	_update_transforms()
-		
+	return true
+
+func _interact_with(target, delta, range):
+	
+	# TODO return false if the interaction is not necessary anymore.
+	
+	return true
 
 func _update_transforms():
 	get_parent().position = Vector3(plane_position.x, 0, plane_position.y)
@@ -54,17 +66,54 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	# Trying to move towards target
-	if plane_position.distance_to(target) > target_distance_threshold:
-		_move_towards(target, delta)
+	if state == ActionStates.Idle:
+		pass
 	
+	elif state == ActionStates.Moving:
+		if !_move_towards(target, delta, target_distance_threshold):
+			command_stop()
+		
+	elif state == ActionStates.Interacting:
+		# Updating the target, moving toward, then trying to interact if in range
+		if target_obj == null: 
+			print ("Target is null and state is Following!")
+		else:
+			target = Vector2(target_obj.position.x, target_obj.position.z) 
+		_move_towards(target, delta, target_distance_threshold)
+		if !_interact_with(target, delta, interaction_range):
+			command_stop()
+	
+	elif state == ActionStates.Following:
+		# Updating the target position then moving.
+		if target_obj == null: 
+			print ("Target is null and state is Following!")
+		else:
+			target = Vector2(target_obj.position.x, target_obj.position.z) 
+		_move_towards(target, delta, target_distance_threshold)
+		
 	pass
 
 # Public Functions Here
-func command_move(target3d):
+func command_move(i_target_3d):
+	state = ActionStates.Moving
+	target = Vector2(i_target_3d.x, i_target_3d.z)
+	print ("Send command Move")
 	
-	# Setting the State Machine
-	# TODO - for now let's assume the object is always moving
+func command_interact(i_target_obj):
+	# TODO check if target is a valid target.
+	state = ActionStates.Interacting
+	target_obj = i_target_obj
+	target = Vector2(target_obj.position.x, target_obj.position.z)
+	print ("Send command Interact")
 	
-	# Setting the target
-	target = Vector2(target3d.x, target3d.z)
+func command_stop():
+	state = ActionStates.Idle
+	target = Vector2(0, 0)
+	print ("Send command Stop")
+	
+func command_follow(i_target_obj):
+	# TODO check if target is a valid target.
+	state = ActionStates.Following
+	target_obj = i_target_obj
+	target = Vector2(target_obj.position.x, target_obj.position.z)
+	print ("Send command Follow")

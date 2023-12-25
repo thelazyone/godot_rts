@@ -90,7 +90,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_a4ykn")
 script = ExtResource("3_u47dp")
 
 [node name="Tank" parent="Actors" instance=ExtResource("4_t1n11")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 1.39241, 0, 2.9452)
 
 [node name="Pixelation" type="CanvasLayer" parent="."]
 
