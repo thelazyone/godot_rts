@@ -1,14 +1,24 @@
-[gd_scene load_steps=14 format=3 uid="uid://by6usbkw54p0d"]
+[gd_scene load_steps=16 format=3 uid="uid://by6usbkw54p0d"]
 
 [ext_resource type="Script" path="res://ObjectsScripts/CameraBase.gd" id="1_a4iqy"]
 [ext_resource type="Script" path="res://world.gd" id="1_gmsn8"]
 [ext_resource type="Script" path="res://ObjectsScripts/RectSelection.gd" id="2_qyexx"]
 [ext_resource type="Shader" path="res://Shaders/edges_v2.gdshader" id="3_qry1y"]
 [ext_resource type="Script" path="res://Actors.gd" id="3_u47dp"]
+[ext_resource type="Script" path="res://Pixelation.gd" id="6_l4fd8"]
 [ext_resource type="Shader" path="res://Shaders/pixel_1.gdshader" id="6_vjooq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ncspn"]
+shader = ExtResource("6_vjooq")
+shader_parameter/pixelSize = 12
+shader_parameter/pixelOffset = Vector2(0, 0)
+shader_parameter/colorRange = 16
+shader_parameter/hardness = 0.5
+shader_parameter/dither = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qdle"]
 render_priority = 0
+next_pass = SubResource("ShaderMaterial_ncspn")
 shader = ExtResource("3_qry1y")
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
 shader_parameter/light_color = Color(1, 1, 1, 1)
@@ -39,16 +49,17 @@ border_color = Color(0, 0.317647, 0.968627, 0.0980392)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t1dld"]
 shader = ExtResource("6_vjooq")
-shader_parameter/pixelSize = 2
+shader_parameter/pixelSize = 3
 shader_parameter/pixelOffset = Vector2(0, 0)
-shader_parameter/colorRange = 16
-shader_parameter/hardness = 0.938
-shader_parameter/dither = 0.376
+shader_parameter/colorRange = 26
+shader_parameter/hardness = 0.753
+shader_parameter/dither = 0.974
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_gmsn8")
 
 [node name="CameraBase" type="Node3D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("1_a4iqy")
 
 [node name="Camera3D" type="Camera3D" parent="CameraBase"]
@@ -81,6 +92,7 @@ light_specular = 8.424
 omni_range = 23.7319
 
 [node name="UnitsControl" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 script = ExtResource("2_qyexx")
 
 [node name="Rect" type="Panel" parent="UnitsControl"]
@@ -92,7 +104,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_a4ykn")
 script = ExtResource("3_u47dp")
 
 [node name="Pixelation" type="CanvasLayer" parent="."]
-visible = false
+unique_name_in_owner = true
+script = ExtResource("6_l4fd8")
 
 [node name="PixelScreen" type="ColorRect" parent="Pixelation"]
 material = SubResource("ShaderMaterial_t1dld")

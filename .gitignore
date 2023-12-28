@@ -3,3 +3,4 @@
 
 # Ignoring the .tmp
 ./*.tmp
+*.tmp

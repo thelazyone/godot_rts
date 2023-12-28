@@ -1,5 +1,6 @@
 extends Node3D
 
+var pixelOffset = Vector2(0.0, 0.0)
 
 func coords_on_xz(screen_position):
 	var z0_plane  = Plane(Vector3(0, 1, 0), 0)
@@ -23,13 +24,21 @@ func _process(delta):
 	var camera_speed_z = camera_obj.size * camera_speed / (camera_obj.get_window().size.y * sin(camera_obj.rotation[0]))
 	
 	if Input.is_action_pressed("ui_right"):
-		camera_obj.position.x += camera_speed_x
+		pixelOffset.x += camera_speed
+		move(Vector3(camera_speed_x, 0, 0))
 		
 	if Input.is_action_pressed("ui_left"):
-		camera_obj.position.x -= camera_speed_x
+		pixelOffset.x -= camera_speed
+		move(Vector3(-camera_speed_x, 0, 0))
 		
 	if Input.is_action_pressed("ui_down"):
-		camera_obj.position.z -= camera_speed_z
+		pixelOffset.y -= camera_speed
+		move(Vector3(0, 0, -camera_speed_z))
 		
 	if Input.is_action_pressed("ui_up"):
-		camera_obj.position.z += camera_speed_z
+		pixelOffset.y += camera_speed
+		move(Vector3(0, 0, camera_speed_z))
+
+func move(i_vector):
+	position += i_vector
+	%Pixelation.set_pixel_offset(pixelOffset);

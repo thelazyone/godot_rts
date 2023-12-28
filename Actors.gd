@@ -35,6 +35,24 @@ func add_tank(x, y): # Clearly temp:
 
 # Callbacks
 func go_to(coordinate):
+	
+	# First calculating the amount of elements to move:
+	var total_elements = 0
+	var plane_baricenter = Vector3(0, 0, 0)
+	for child in get_children():
+		if "is_selected" in child and child.is_selected:
+			total_elements = total_elements + 1
+			
+			# Calculating the baricenter. TODO make an autoload with geometry functs.
+			plane_baricenter = plane_baricenter + child.position
+	
+	plane_baricenter = plane_baricenter / total_elements
+	
+	# Creating a grid of positions to reach:
+	#var 
+	# TODO
+	
+	# TODO move the units in a grid 
 	for child in get_children():
 		if "is_selected" in child and child.is_selected:
 			child.command_move(m_Camera.coords_on_xz(coordinate))

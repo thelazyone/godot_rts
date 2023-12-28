@@ -45,10 +45,8 @@ func _process(delta):
 # State commands
 func combat_aim(coordinates):
 	state = CombatStates.Aiming
-	print ("aiming to ", coordinates)
 	plane_target = coordinates
 	
 func combat_stop():
 	state = CombatStates.Idle
-	print ("stopping the aim")
 	plane_target = Vector2(0, 0)
