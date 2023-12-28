@@ -4,10 +4,10 @@ extends Node3D
 func coords_on_xz(screen_position):
 	var z0_plane  = Plane(Vector3(0, 1, 0), 0)
 	var camera_obj = get_node("Camera3D")
-	return z0_plane.intersects_ray(
-							 camera_obj.project_ray_origin(screen_position),
-							 camera_obj.project_ray_normal(screen_position))
-
+	var coords_3d = z0_plane.intersects_ray(
+							camera_obj.project_ray_origin(screen_position),
+							camera_obj.project_ray_normal(screen_position))
+	return Vector2(coords_3d.x, coords_3d.z)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

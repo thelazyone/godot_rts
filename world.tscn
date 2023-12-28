@@ -1,11 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://by6usbkw54p0d"]
+[gd_scene load_steps=14 format=3 uid="uid://by6usbkw54p0d"]
 
 [ext_resource type="Script" path="res://ObjectsScripts/CameraBase.gd" id="1_a4iqy"]
 [ext_resource type="Script" path="res://world.gd" id="1_gmsn8"]
 [ext_resource type="Script" path="res://ObjectsScripts/RectSelection.gd" id="2_qyexx"]
 [ext_resource type="Shader" path="res://Shaders/edges_v2.gdshader" id="3_qry1y"]
 [ext_resource type="Script" path="res://Actors.gd" id="3_u47dp"]
-[ext_resource type="PackedScene" uid="uid://cxb341ma827fc" path="res://tank.tscn" id="4_t1n11"]
 [ext_resource type="Shader" path="res://Shaders/pixel_1.gdshader" id="6_vjooq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qdle"]
@@ -40,7 +39,7 @@ border_color = Color(0, 0.317647, 0.968627, 0.0980392)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t1dld"]
 shader = ExtResource("6_vjooq")
-shader_parameter/pixelSize = 4
+shader_parameter/pixelSize = 2
 shader_parameter/pixelOffset = Vector2(0, 0)
 shader_parameter/colorRange = 16
 shader_parameter/hardness = 0.938
@@ -61,21 +60,24 @@ size = 10.0
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0.342816, -2.72959)
 mesh = SubResource("QuadMesh_q20lf")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="Environment" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_ojloa")
 
-[node name="Plane" type="MeshInstance3D" parent="NavigationRegion3D"]
+[node name="Plane" type="MeshInstance3D" parent="Environment"]
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 mesh = SubResource("PlaneMesh_twrfu")
 
-[node name="Cube" type="MeshInstance3D" parent="NavigationRegion3D"]
+[node name="Cube" type="MeshInstance3D" parent="Environment"]
 transform = Transform3D(0.99997, -0.00310444, 0.00710911, 0.0032272, 0.999845, -0.0173201, -0.00705423, 0.0173425, 0.999825, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_mbfrx")
 skeleton = NodePath("../Plane")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="OmniLight3D" type="OmniLight3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.8649, 0)
-light_energy = 11.058
+light_energy = 15.4
+light_indirect_energy = 1.457
+light_volumetric_fog_energy = 2.676
+light_specular = 8.424
 omni_range = 23.7319
 
 [node name="UnitsControl" type="CanvasLayer" parent="."]
@@ -89,12 +91,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_a4ykn")
 [node name="Actors" type="Node3D" parent="."]
 script = ExtResource("3_u47dp")
 
-[node name="Tank" parent="Actors" instance=ExtResource("4_t1n11")]
-
 [node name="Pixelation" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="PixelScreen" type="ColorRect" parent="Pixelation"]
-visible = false
 material = SubResource("ShaderMaterial_t1dld")
 offset_right = 1151.0
 offset_bottom = 648.0
