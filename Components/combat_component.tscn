@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://t4mkrwhanp2b"]
+
+[ext_resource type="Script" path="res://Components/combat_component.gd" id="1_bfvra"]
+
+[node name="CombatComponent" type="Node3D"]
+script = ExtResource("1_bfvra")
+ROT_SPEED = 2
