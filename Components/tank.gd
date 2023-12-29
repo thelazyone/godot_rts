@@ -28,8 +28,8 @@ func select(bool_value):
 	
 	
 func combat_aim(target):
-	print("Combat Aim called with ", target)
 	get_node("CombatComponent").combat_aim(target)
+	
 	
 func combat_stop():
 	get_node("CombatComponent").combat_stop()

@@ -66,7 +66,6 @@ func select_actors(start, end):
 			# STUPID method, clearly not the correct one.
 			var select_value = child.position.x > plane_start.x and child.position.x < plane_end.x and child.position.z > plane_start.y and child.position.z < plane_end.y
 			child.select(select_value)
-			print ("child is in ", child.position,", selected ", plane_start, " " , plane_end, ". selection is ", select_value )
 			
 func aim_to(coordinate):
 	for child in get_children():
