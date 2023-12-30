@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://by6usbkw54p0d"]
+[gd_scene load_steps=16 format=3 uid="uid://by6usbkw54p0d"]
 
 [ext_resource type="Script" path="res://ObjectsScripts/CameraBase.gd" id="1_a4iqy"]
 [ext_resource type="Script" path="res://world.gd" id="1_gmsn8"]
@@ -29,6 +29,8 @@ material = SubResource("ShaderMaterial_4qdle")
 [sub_resource type="PlaneMesh" id="PlaneMesh_twrfu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_mbfrx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_62ewo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a4ykn"]
 bg_color = Color(0.960784, 0.960784, 0.960784, 0.368627)
@@ -73,6 +75,12 @@ mesh = SubResource("PlaneMesh_twrfu")
 transform = Transform3D(0.99997, -0.00310444, 0.00710911, 0.0032272, 0.999845, -0.0173201, -0.00705423, 0.0173425, 0.999825, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_mbfrx")
 skeleton = NodePath("../Plane")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Cube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Cube/StaticBody3D"]
+transform = Transform3D(1, 1.16415e-09, 0, 0, 1, -9.31323e-09, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_62ewo")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.8649, 0)

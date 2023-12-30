@@ -70,7 +70,6 @@ func _process(delta):
 	# Checking if the angle to shoot is right:
 	if ready_to_shoot and abs(target_direction - turret_direction) > MAX_SHOOT_ANGLE:
 		ready_to_shoot = false
-		print ("not ready to shoot! ", abs(target_direction - turret_direction) , ", ", MAX_SHOOT_ANGLE)
 	
 	if ready_to_shoot:
 		if Time.get_ticks_msec() - last_shot_time > ATTACK_PERIOD :
@@ -80,7 +79,6 @@ func _process(delta):
 	
 # Shooting at target with scatter. Spawns a projectile that will then behave as it should.
 func _shoot(target):
-	print ("Shooting at", target)
 	var new_projectile = PROJECTILE.instantiate()
 	new_projectile.position = position
 	new_projectile.set_target(plane_position + turret_plane_position, target, HIT_SCATTER_RADIUS)
