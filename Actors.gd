@@ -13,7 +13,9 @@ var tanks = []
 func _ready():
 	m_UnitsControlNode.movement_order.connect(go_to)
 	m_UnitsControlNode.area_selected.connect(select_actors)
-	m_UnitsControlNode.aim_order.connect(aim_to)
+	#m_UnitsControlNode.aim_order.connect(aim_to) # TODO DECOMMENT
+	m_UnitsControlNode.aim_order.connect(shoot_area) # TODO TEST TBR
+	
 	add_tank(4,4)
 	add_tank(2,4)
 	add_tank(0,4)
@@ -74,6 +76,12 @@ func aim_to(coordinate):
 		else:
 			child.combat_stop()
 
+func shoot_area(coordinate):
+	for child in get_children():
+		if "is_selected" in child and child.is_selected:
+			child.combat_attack_area(m_Camera.coords_on_xz(coordinate))
+		else:
+			child.combat_stop()
 
 
 

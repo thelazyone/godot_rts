@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqkagvogq0l1r"]
+
+[ext_resource type="Script" path="res://Components/gun_shell.gd" id="1_4a04k"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_wt1fu"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cfyob"]
+
+[node name="GunShell" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_4a04k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+layers = 2
+mesh = SubResource("SphereMesh_wt1fu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+shape = SubResource("SphereShape3D_cfyob")

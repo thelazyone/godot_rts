@@ -1,7 +1,14 @@
 extends Node3D
 
-@export var HAS_TURRET = false
+@export var HIT_DAMAGE = 20
+@export var HIT_SCATTER_RADIUS = 1
+@export var ATTACK_PERIOD = 2000
+@export var MAX_SHOOT_ANGLE = 0.1
+@export var PROJECTILE: Resource
+
+@export var HAS_TURRET = true
 @export var ROT_SPEED = 4
+
 
 # Combat State:
 enum CombatStates {
@@ -9,22 +16,28 @@ enum CombatStates {
 	Searching,		# Waiting for a target to attack
 	Aiming, 		# Not attacking, but aiming at a specific point (for debug at least)
 	Attacking,		# Attacking a target somehow
+	AttackingArea,		# Attacking a target somehow
 	}
 	
 var state = CombatStates.Idle
 var plane_target = Vector2(0, 0)
 var plane_position = Vector2(0, 0)
 var turret_direction = 0
+var turret_plane_position = Vector2(0,0)
+var last_shot_time = 0
 
 # Temp function, i'm sure there's a prebuild one.
 func diff_angles(angle1, angle2):
 	return fmod(fmod(angle1, 2 * PI) - fmod(angle2, 2 * PI) + 3 * PI, 2 * PI) - PI
+	
+func wrap_angle(angle):
+	return fmod(angle + 3*PI, 2*PI) - 3*PI
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	plane_position = Vector2(get_parent().position.x, get_parent().position.z)
-
+	turret_plane_position = Vector2(get_node("../Turret").position.x, get_node("../Turret").position.z)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -32,20 +45,59 @@ func _process(delta):
 	plane_position = Vector2(get_parent().position.x, get_parent().position.z)
 	
 	# Rotating the turret, if any.
+	var target_direction = 0
+	var ready_to_shoot = false
 	if HAS_TURRET:
-		var target_direction = 0
-		if state == CombatStates.Aiming or state == CombatStates.Attacking:
+		if state == CombatStates.Aiming:
 			target_direction = -plane_position.angle_to_point(plane_target)
+		elif state == CombatStates.Attacking:
+			target_direction = -plane_position.angle_to_point(plane_target) # TODO this should update with the target!
+			ready_to_shoot = true
+		elif state == CombatStates.AttackingArea:
+			target_direction = -plane_position.angle_to_point(plane_target)
+			ready_to_shoot = true
 		else:
 			target_direction = get_parent().rotation.y
 			
 		turret_direction += clamp(diff_angles(target_direction, turret_direction), -ROT_SPEED * delta, ROT_SPEED * delta)
+	pass
+	
+	target_direction = wrap_angle(target_direction)
+	turret_direction = wrap_angle(turret_direction)
+	
+	# TODO if it doesn't have turret it must rotate entirely instead.
+	
+	# Checking if the angle to shoot is right:
+	if ready_to_shoot and abs(target_direction - turret_direction) > MAX_SHOOT_ANGLE:
+		ready_to_shoot = false
+		print ("not ready to shoot! ", abs(target_direction - turret_direction) , ", ", MAX_SHOOT_ANGLE)
+	
+	if ready_to_shoot:
+		if Time.get_ticks_msec() - last_shot_time > ATTACK_PERIOD :
+			last_shot_time = Time.get_ticks_msec()
+			_shoot(plane_target)
+	
+	
+# Shooting at target with scatter. Spawns a projectile that will then behave as it should.
+func _shoot(target):
+	print ("Shooting at", target)
+	var new_projectile = PROJECTILE.instantiate()
+	new_projectile.position = position
+	new_projectile.set_target(plane_position + turret_plane_position, target, HIT_SCATTER_RADIUS)
+	new_projectile.set_shell_offset(get_node("../Turret").position)
+	add_child(new_projectile)
 	pass
 
 # State commands
 func combat_aim(coordinates):
 	state = CombatStates.Aiming
 	plane_target = coordinates
+	
+func combat_attack_area(coordinates):
+	state = CombatStates.AttackingArea
+	plane_target = coordinates
+	
+	# TODO set a timer: 
 	
 func combat_stop():
 	state = CombatStates.Idle

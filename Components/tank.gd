@@ -34,3 +34,7 @@ func combat_aim(target):
 func combat_stop():
 	get_node("CombatComponent").combat_stop()
 	
+	
+func combat_attack_area(target):
+	get_node("CombatComponent").combat_attack_area(target)
+	

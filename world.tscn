@@ -1,34 +1,25 @@
-[gd_scene load_steps=16 format=3 uid="uid://by6usbkw54p0d"]
+[gd_scene load_steps=15 format=3 uid="uid://by6usbkw54p0d"]
 
 [ext_resource type="Script" path="res://ObjectsScripts/CameraBase.gd" id="1_a4iqy"]
 [ext_resource type="Script" path="res://world.gd" id="1_gmsn8"]
 [ext_resource type="Script" path="res://ObjectsScripts/RectSelection.gd" id="2_qyexx"]
-[ext_resource type="Shader" path="res://Shaders/edges_v2.gdshader" id="3_qry1y"]
 [ext_resource type="Script" path="res://Actors.gd" id="3_u47dp"]
+[ext_resource type="Shader" path="res://tbr2.gdshader" id="4_kqwnj"]
 [ext_resource type="Script" path="res://Pixelation.gd" id="6_l4fd8"]
 [ext_resource type="Shader" path="res://Shaders/pixel_1.gdshader" id="6_vjooq"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ncspn"]
-shader = ExtResource("6_vjooq")
-shader_parameter/pixelSize = 12
-shader_parameter/pixelOffset = Vector2(0, 0)
-shader_parameter/colorRange = 16
-shader_parameter/hardness = 0.5
-shader_parameter/dither = 0.5
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qdle"]
 render_priority = 0
-next_pass = SubResource("ShaderMaterial_ncspn")
-shader = ExtResource("3_qry1y")
+shader = ExtResource("4_kqwnj")
+shader_parameter/pixellization_enabled = false
+shader_parameter/pixelSize = 1
+shader_parameter/searchArea = 1.0
+shader_parameter/shadows_enabled = true
+shader_parameter/highlights_enabled = true
+shader_parameter/shadow_strength = 1.0
+shader_parameter/highlight_strength = 0.22
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/light_color = Color(1, 1, 1, 1)
-shader_parameter/check_range = 2.055
-shader_parameter/spacing_threhsold = 1.392
-shader_parameter/normal_threshold = 0.0
-shader_parameter/line_thickness = 0.1
-shader_parameter/edge_intensity = 2.197
-shader_parameter/ridge_intensity = 0.0
-shader_parameter/hardness = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_q20lf"]
 material = SubResource("ShaderMaterial_4qdle")
@@ -105,6 +96,7 @@ script = ExtResource("3_u47dp")
 
 [node name="Pixelation" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+visible = false
 script = ExtResource("6_l4fd8")
 
 [node name="PixelScreen" type="ColorRect" parent="Pixelation"]
