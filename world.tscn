@@ -99,6 +99,33 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_a4ykn")
 
+[node name="AggressiveBtn" type="Button" parent="UnitsControl"]
+offset_left = 20.0
+offset_top = 902.0
+offset_right = 128.0
+offset_bottom = 943.0
+pivot_offset = Vector2(64, 26)
+toggle_mode = true
+text = "Aggressive
+"
+
+[node name="AreaAtkBtn" type="Button" parent="UnitsControl"]
+offset_left = 140.0
+offset_top = 902.0
+offset_right = 248.0
+offset_bottom = 943.0
+pivot_offset = Vector2(64, 26)
+text = "Area Atk"
+
+[node name="StopBtn" type="Button" parent="UnitsControl"]
+offset_left = 261.0
+offset_top = 902.0
+offset_right = 369.0
+offset_bottom = 943.0
+pivot_offset = Vector2(64, 26)
+text = "Stop
+"
+
 [node name="Actors" type="Node3D" parent="."]
 script = ExtResource("3_u47dp")
 
