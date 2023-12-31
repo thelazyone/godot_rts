@@ -1,8 +1,8 @@
 extends Node3D
 
 @export var HIT_DAMAGE = 20
-@export var HIT_SCATTER_RADIUS = 1
-@export var ATTACK_PERIOD = 2000
+@export var HIT_DEVIATION = 10
+@export var ATTACK_PERIOD = 100
 @export var MAX_SHOOT_ANGLE = 0.1
 @export var PROJECTILE: Resource
 
@@ -25,14 +25,6 @@ var plane_position = Vector2(0, 0)
 var turret_direction = 0
 var turret_plane_position = Vector2(0,0)
 var last_shot_time = 0
-
-# Temp function, i'm sure there's a prebuild one.
-func diff_angles(angle1, angle2):
-	return fmod(fmod(angle1, 2 * PI) - fmod(angle2, 2 * PI) + 3 * PI, 2 * PI) - PI
-	
-func wrap_angle(angle):
-	return fmod(angle + 3*PI, 2*PI) - 3*PI
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -59,11 +51,11 @@ func _process(delta):
 		else:
 			target_direction = get_parent().rotation.y
 			
-		turret_direction += clamp(diff_angles(target_direction, turret_direction), -ROT_SPEED * delta, ROT_SPEED * delta)
+		turret_direction += clamp(Geometry.diff_angles(target_direction, turret_direction), -ROT_SPEED * delta, ROT_SPEED * delta)
 	pass
 	
-	target_direction = wrap_angle(target_direction)
-	turret_direction = wrap_angle(turret_direction)
+	target_direction = Geometry.wrap_angle(target_direction)
+	turret_direction = Geometry.wrap_angle(turret_direction)
 	
 	# TODO if it doesn't have turret it must rotate entirely instead.
 	
@@ -81,7 +73,7 @@ func _process(delta):
 func _shoot(target):
 	var new_projectile = PROJECTILE.instantiate()
 	new_projectile.position = position
-	new_projectile.set_target(plane_position + turret_plane_position, target, HIT_SCATTER_RADIUS)
+	new_projectile.set_target(plane_position + turret_plane_position, target, HIT_DEVIATION)
 	new_projectile.set_shell_offset(get_node("../Turret").position)
 	add_child(new_projectile)
 	pass

@@ -21,11 +21,6 @@ var plane_position = Vector2(0, 0)
 var target_distance_threshold = 0.1
 var interaction_range = 0.5
 
-# Temp function, i'm sure there's a prebuild one.
-func diff_angles(angle1, angle2):
-	return fmod(fmod(angle1, 2 * PI) - fmod(angle2, 2 * PI) + 3 * PI, 2 * PI) - PI
-
-
 # Movement towards target - TODO check for collisions using Godot tools
 func _move_towards(target, delta, threshold):
 	
@@ -40,10 +35,10 @@ func _move_towards(target, delta, threshold):
 	# First rotating if not rotated.
 	var target_direction = plane_position.angle_to_point(target)
 	
-	plane_direction += clamp(diff_angles(target_direction, plane_direction), -ROT_SPEED * delta, ROT_SPEED * delta)
+	plane_direction += clamp(Geometry.diff_angles(target_direction, plane_direction), -ROT_SPEED * delta, ROT_SPEED * delta)
 	
 	# If the difference in angle is not excessive
-	if abs(diff_angles(target_direction, plane_direction)) < MIN_ANGLE_MOVE:
+	if abs(Geometry.diff_angles(target_direction, plane_direction)) < MIN_ANGLE_MOVE:
 		get_parent().velocity.x = SPEED * cos(plane_direction) * delta
 		get_parent().velocity.z = SPEED * sin(plane_direction) * delta
 	
