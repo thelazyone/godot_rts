@@ -62,6 +62,7 @@ size = 10.0
 
 [node name="ToonShader" type="MeshInstance3D" parent="CameraBase/Camera3D"]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0.342816, -2.72959)
+visible = false
 mesh = SubResource("QuadMesh_q20lf")
 
 [node name="Environment" type="NavigationRegion3D" parent="."]
