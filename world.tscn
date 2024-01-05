@@ -25,6 +25,10 @@ shader_parameter/shadow_color = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_4qdle")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ojloa"]
+vertices = PackedVector3Array(-19.5, 0.489804, -0.25, -1.25, 0.489804, -0.25, -1, 0.489804, -1, -1, 0.489804, -1, 0.25, 0.489804, -1.25, 0.25, 0.489804, -19.5, -19.5, 0.489804, -19.5, -19.5, 0.489804, -0.25, 0.25, 0.489804, -19.5, 0.25, 0.489804, -1.25, 1, 0.489804, -1, 1, 0.489804, -1, 1.25, 0.489804, 0.25, 19.5, 0.489804, 0.25, 19.5, 0.489804, -19.5, 0.25, 0.489804, -19.5, 0.25, 0.489804, 19.5, 0.25, 0.489804, 1.25, -1, 0.489804, 1, -19.5, 0.489804, -0.25, -19.5, 0.489804, 19.5, -1, 0.489804, 1, -1.25, 0.489804, -0.25, -19.5, 0.489804, -0.25, 1, 0.489804, 1.25, 0.25, 0.489804, 1.25, 0.25, 0.489804, 19.5, 19.5, 0.489804, 0.25, 1.25, 0.489804, 0.25, 1, 0.489804, 1.25, 0.25, 0.489804, 19.5, 19.5, 0.489804, 19.5)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 6), PackedInt32Array(6, 3, 7), PackedInt32Array(10, 9, 8), PackedInt32Array(12, 11, 13), PackedInt32Array(13, 11, 14), PackedInt32Array(14, 11, 15), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 20), PackedInt32Array(18, 20, 19), PackedInt32Array(23, 22, 21), PackedInt32Array(26, 25, 24), PackedInt32Array(28, 27, 29), PackedInt32Array(29, 27, 31), PackedInt32Array(29, 31, 30)]
+agent_height = 1.0
+agent_radius = 0.3
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_twrfu"]
 
@@ -62,10 +66,10 @@ size = 10.0
 
 [node name="ToonShader" type="MeshInstance3D" parent="CameraBase/Camera3D"]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0.342816, -2.72959)
-visible = false
 mesh = SubResource("QuadMesh_q20lf")
 
 [node name="Environment" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018405, 0, -0.0933971)
 navigation_mesh = SubResource("NavigationMesh_ojloa")
 
 [node name="Plane" type="MeshInstance3D" parent="Environment"]

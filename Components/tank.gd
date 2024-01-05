@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 var is_selected = false
 
 # Called when the node enters the scene tree for the first time.
@@ -8,7 +9,8 @@ func _ready():
 
 
 func _physics_process(delta):
-	move_and_slide()
+	# Previously using move_and_slide, but sliding looks very weird on tracked vehicles
+	move_and_collide(velocity * delta)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

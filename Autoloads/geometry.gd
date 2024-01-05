@@ -6,3 +6,9 @@ func diff_angles(angle1, angle2):
 	
 func wrap_angle(angle):
 	return fmod(angle + 3*PI, 2*PI) - 3*PI
+	
+func plane_to_space(pos_2d):
+	return Vector3(pos_2d.x, 0, pos_2d.y)
+
+func space_to_plane(pos_3d):
+	return Vector2(pos_3d.x, pos_3d.z)

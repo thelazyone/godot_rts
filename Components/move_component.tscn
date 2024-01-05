@@ -4,3 +4,7 @@
 
 [node name="MoveComponent" type="Node3D"]
 script = ExtResource("1_3nkvi")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+radius = 2.0

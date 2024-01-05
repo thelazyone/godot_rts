@@ -57,7 +57,6 @@ func _physics_process(delta):
 	
 
 func explode():
-	print ("Exploding!")
 	var explosion = EXPLOSION.instantiate()
 	explosion.position = position
 	get_parent().add_child(explosion)

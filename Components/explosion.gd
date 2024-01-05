@@ -7,7 +7,6 @@ extends RigidBody3D
 var spawn_time = Time.get_ticks_msec()
 
 func _ready():
-	print ("explosion has been created!")
 	get_node("CollisionShape3D").scale *= AREA
 	get_node("MeshInstance3D").scale *= AREA
 	

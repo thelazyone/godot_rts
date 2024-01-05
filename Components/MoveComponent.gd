@@ -21,6 +21,8 @@ var plane_position = Vector2(0, 0)
 var target_distance_threshold = 0.1
 var interaction_range = 0.5
 
+
+
 # Movement towards target - TODO check for collisions using Godot tools
 func _move_towards(target, delta, threshold):
 	
@@ -41,6 +43,9 @@ func _move_towards(target, delta, threshold):
 	if abs(Geometry.diff_angles(target_direction, plane_direction)) < MIN_ANGLE_MOVE:
 		get_parent().velocity.x = SPEED * cos(plane_direction) * delta
 		get_parent().velocity.z = SPEED * sin(plane_direction) * delta
+		
+	# Updating the navigation agent as well.
+	nav_agent.set_velocity(Geometry.plane_to_space(get_parent().velocity))
 	
 	_update_transforms()
 	return true
@@ -63,10 +68,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	# Updating the plane position
-
+	# Updating the plane position and target point:
 	plane_position = Vector2(get_parent().position.x, get_parent().position.z)
-	#print("Position set to ", plane_position)
+	target = Geometry.space_to_plane(nav_agent.get_next_path_position())
 		
 	if state == ActionStates.Idle:
 		pass
@@ -98,14 +102,14 @@ func _process(delta):
 # Public Functions Here
 func command_move(i_target):
 	state = ActionStates.Moving
-	target = i_target
+	update_target_location(Geometry.plane_to_space(i_target))
 	print ("Send command Move towards", i_target)
 	
 func command_interact(i_target_obj):
 	# TODO check if target is a valid target.
 	state = ActionStates.Interacting
 	target_obj = i_target_obj
-	target = Vector2(target_obj.position.x, target_obj.position.z)
+	update_target_location(target_obj.position)
 	print ("Send command Interact")
 	
 func command_stop():
@@ -117,6 +121,14 @@ func command_follow(i_target_obj):
 	# TODO check if target is a valid target.
 	state = ActionStates.Following
 	target_obj = i_target_obj
-	target = Vector2(target_obj.position.x, target_obj.position.z)
+	update_target_location(target_obj.position)
 	print ("Send command Follow")
+	
+	
+	
+# Pathfinding navigation
+@onready var nav_agent = $NavigationAgent3D
+
+func update_target_location(location):
+	nav_agent.set_target_position(location)
 	

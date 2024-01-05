@@ -61,7 +61,6 @@ func _process(delta):
 	
 	# Checking if the angle to shoot is right:
 	if ready_to_shoot and abs(Geometry.diff_angles(target_direction, turret_direction)) > MAX_SHOOT_ANGLE:
-		print ("not shooting, because angle ", abs(Geometry.diff_angles(target_direction, turret_direction)) , " is greater than max ")
 		ready_to_shoot = false
 	
 	if ready_to_shoot:
