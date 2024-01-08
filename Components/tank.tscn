@@ -17,6 +17,9 @@ safe_margin = 0.1
 script = ExtResource("1_lgp2k")
 
 [node name="MoveComponent" parent="." instance=ExtResource("2_3ctpl")]
+SPEED = 200
+ROT_SPEED = 5
+MIN_ANGLE_MOVE = 0.785
 
 [node name="Selected" parent="." instance=ExtResource("4_f5atu")]
 visible = false
@@ -24,6 +27,10 @@ visible = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-3.93403e-08, -0.9, 0, 0.9, -3.93403e-08, 0, 0, 0, 0.9, 0, 0.245, 0)
 shape = SubResource("CapsuleShape3D_vaieb")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="CollisionShape3D"]
+radius = 2.0
+avoidance_layers = 3
 
 [node name="Body" type="Node3D" parent="."]
 

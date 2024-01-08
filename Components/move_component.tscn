@@ -4,6 +4,9 @@
 
 [node name="MoveComponent" type="Node3D"]
 script = ExtResource("1_3nkvi")
+SPEED = null
+ROT_SPEED = null
+MIN_ANGLE_MOVE = null
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 avoidance_enabled = true

@@ -3,26 +3,25 @@
 [ext_resource type="Script" path="res://ObjectsScripts/CameraBase.gd" id="1_a4iqy"]
 [ext_resource type="Script" path="res://world.gd" id="1_gmsn8"]
 [ext_resource type="Script" path="res://ObjectsScripts/RectSelection.gd" id="2_qyexx"]
+[ext_resource type="Shader" path="res://Shaders/edge_shader_cberry22.gdshader" id="3_bxj61"]
 [ext_resource type="Script" path="res://Actors.gd" id="3_u47dp"]
-[ext_resource type="Shader" path="res://tbr2.gdshader" id="4_kqwnj"]
 [ext_resource type="Script" path="res://Pixelation.gd" id="6_l4fd8"]
 [ext_resource type="Shader" path="res://Shaders/pixel_1.gdshader" id="6_vjooq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qdle"]
 render_priority = 0
-shader = ExtResource("4_kqwnj")
-shader_parameter/pixellization_enabled = false
-shader_parameter/pixelSize = 1
-shader_parameter/searchArea = 1.0
-shader_parameter/shadows_enabled = true
-shader_parameter/highlights_enabled = true
-shader_parameter/shadow_strength = 1.0
-shader_parameter/highlight_strength = 0.22
-shader_parameter/highlight_color = Color(1, 1, 1, 1)
-shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader = ExtResource("3_bxj61")
+shader_parameter/depth_threshold = 0.05
+shader_parameter/normal_threshold = 0.743
+shader_parameter/darken_amount = 0.0
+shader_parameter/lighten_amount = 2.94
+shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
+shader_parameter/edge_scale = 1.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_q20lf"]
 material = SubResource("ShaderMaterial_4qdle")
+flip_faces = true
+size = Vector2(2, 2)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ojloa"]
 vertices = PackedVector3Array(-19.5, 0.489804, -0.25, -1.25, 0.489804, -0.25, -1, 0.489804, -1, -1, 0.489804, -1, 0.25, 0.489804, -1.25, 0.25, 0.489804, -19.5, -19.5, 0.489804, -19.5, -19.5, 0.489804, -0.25, 0.25, 0.489804, -19.5, 0.25, 0.489804, -1.25, 1, 0.489804, -1, 1, 0.489804, -1, 1.25, 0.489804, 0.25, 19.5, 0.489804, 0.25, 19.5, 0.489804, -19.5, 0.25, 0.489804, -19.5, 0.25, 0.489804, 19.5, 0.25, 0.489804, 1.25, -1, 0.489804, 1, -19.5, 0.489804, -0.25, -19.5, 0.489804, 19.5, -1, 0.489804, 1, -1.25, 0.489804, -0.25, -19.5, 0.489804, -0.25, 1, 0.489804, 1.25, 0.25, 0.489804, 1.25, 0.25, 0.489804, 19.5, 19.5, 0.489804, 0.25, 1.25, 0.489804, 0.25, 1, 0.489804, 1.25, 0.25, 0.489804, 19.5, 19.5, 0.489804, 19.5)
@@ -46,7 +45,7 @@ border_color = Color(0, 0.317647, 0.968627, 0.0980392)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t1dld"]
 shader = ExtResource("6_vjooq")
-shader_parameter/pixelSize = 3
+shader_parameter/pixelSize = 2
 shader_parameter/pixelOffset = Vector2(0, 0)
 shader_parameter/colorRange = 26
 shader_parameter/hardness = 0.753
@@ -136,12 +135,14 @@ script = ExtResource("3_u47dp")
 
 [node name="Pixelation" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
-visible = false
 script = ExtResource("6_l4fd8")
 
 [node name="PixelScreen" type="ColorRect" parent="Pixelation"]
 material = SubResource("ShaderMaterial_t1dld")
-offset_right = 1151.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
