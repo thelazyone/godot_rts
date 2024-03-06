@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://by6usbkw54p0d"]
+[gd_scene load_steps=15 format=3 uid="uid://by6usbkw54p0d"]
 
 [ext_resource type="Script" path="res://ObjectsScripts/CameraBase.gd" id="1_a4iqy"]
 [ext_resource type="Script" path="res://world.gd" id="1_gmsn8"]
 [ext_resource type="Script" path="res://ObjectsScripts/RectSelection.gd" id="2_qyexx"]
 [ext_resource type="Shader" path="res://Shaders/edge_shader_cberry22.gdshader" id="3_bxj61"]
 [ext_resource type="Script" path="res://Actors.gd" id="3_u47dp"]
+[ext_resource type="PackedScene" uid="uid://lfio3y5xh11s" path="res://Components/cube_obstacle.tscn" id="4_d1p21"]
 [ext_resource type="Script" path="res://Pixelation.gd" id="6_l4fd8"]
 [ext_resource type="Shader" path="res://Shaders/pixel_1.gdshader" id="6_vjooq"]
 
@@ -30,10 +31,6 @@ agent_height = 1.0
 agent_radius = 0.3
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_twrfu"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_mbfrx"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_62ewo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a4ykn"]
 bg_color = Color(0.960784, 0.960784, 0.960784, 0.368627)
@@ -75,17 +72,6 @@ navigation_mesh = SubResource("NavigationMesh_ojloa")
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 mesh = SubResource("PlaneMesh_twrfu")
 
-[node name="Cube" type="MeshInstance3D" parent="Environment"]
-transform = Transform3D(0.866026, 0.0087262, 0.499924, 0, 0.999848, -0.0174524, -0.5, 0.0151142, 0.865894, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_mbfrx")
-skeleton = NodePath("../Plane")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Cube"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Cube/StaticBody3D"]
-transform = Transform3D(1, 1.16415e-09, 0, 0, 1, -9.31323e-09, 0, 0, 1, 0, 0, 0)
-shape = SubResource("BoxShape3D_62ewo")
-
 [node name="OmniLight3D" type="OmniLight3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.8649, 0)
 light_energy = 15.4
@@ -93,6 +79,17 @@ light_indirect_energy = 1.457
 light_volumetric_fog_energy = 2.676
 light_specular = 8.424
 omni_range = 23.7319
+
+[node name="CubeObstacle" parent="Environment" instance=ExtResource("4_d1p21")]
+
+[node name="CubeObstacle2" parent="Environment" instance=ExtResource("4_d1p21")]
+transform = Transform3D(0.500039, 0.0238379, 0.865676, 0.00872619, 0.999432, -0.0325617, -0.86596, 0.0238361, 0.499547, -8.69261, 0.425923, -1.51708)
+
+[node name="CubeObstacle3" parent="Environment" instance=ExtResource("4_d1p21")]
+transform = Transform3D(0.000208706, 0.0412818, 0.999149, 0.0238379, 0.998864, -0.041275, -0.999717, 0.0238262, -0.000776172, 2.96969, 0.536892, 3.70348)
+
+[node name="CubeObstacle4" parent="Environment" instance=ExtResource("4_d1p21")]
+transform = Transform3D(-0.499394, 0.0563786, 0.864541, 0.0412818, 0.998297, -0.0412552, -0.865392, 0.0150871, -0.50087, 4.49503, 0.240075, -5.52866)
 
 [node name="UnitsControl" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -103,7 +100,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_a4ykn")
 
-[node name="AggressiveBtn" type="Button" parent="UnitsControl"]
+[node name="Build Plant" type="Button" parent="UnitsControl"]
 offset_left = 20.0
 offset_top = 902.0
 offset_right = 128.0
@@ -113,7 +110,7 @@ toggle_mode = true
 text = "Aggressive
 "
 
-[node name="AreaAtkBtn" type="Button" parent="UnitsControl"]
+[node name="Build Factory" type="Button" parent="UnitsControl"]
 offset_left = 140.0
 offset_top = 902.0
 offset_right = 248.0
@@ -121,7 +118,7 @@ offset_bottom = 943.0
 pivot_offset = Vector2(64, 26)
 text = "Area Atk"
 
-[node name="StopBtn" type="Button" parent="UnitsControl"]
+[node name="Add Worker" type="Button" parent="UnitsControl"]
 offset_left = 261.0
 offset_top = 902.0
 offset_right = 369.0

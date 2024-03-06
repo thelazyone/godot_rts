@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://cieode54cqvbx"]
+
+[ext_resource type="Script" path="res://Components/tank.gd" id="1_xmyou"]
+[ext_resource type="PackedScene" uid="uid://5s3rcge75d24" path="res://Components/move_component.tscn" id="2_n6t3f"]
+[ext_resource type="PackedScene" uid="uid://dl5dd1ep5aybv" path="res://Components/selected_sprite.tscn" id="3_b2r0f"]
+[ext_resource type="PackedScene" uid="uid://b256cjygw4p6" path="res://Assets/Worker/worker.glb" id="4_1i6hh"]
+[ext_resource type="PackedScene" uid="uid://t4mkrwhanp2b" path="res://Components/combat_component.tscn" id="6_iyp1i"]
+[ext_resource type="PackedScene" uid="uid://bqkagvogq0l1r" path="res://Components/gun_shell.tscn" id="7_devjo"]
+[ext_resource type="PackedScene" uid="uid://b37e5dvbs8aos" path="res://Assets/Worker/head.glb" id="7_pr8ns"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vaieb"]
+
+[node name="Worker" type="CharacterBody3D"]
+axis_lock_linear_y = true
+safe_margin = 0.1
+script = ExtResource("1_xmyou")
+
+[node name="MoveComponent" parent="." instance=ExtResource("2_n6t3f")]
+transform = Transform3D(0.9965, 0, 0, 0, 0.9965, 0, 0, 0, 0.9965, 0, 0, 0)
+SPEED = 200
+ROT_SPEED = 5
+MIN_ANGLE_MOVE = 0.785
+
+[node name="Selected" parent="." instance=ExtResource("3_b2r0f")]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-3.93403e-08, -0.9, 0, 0.9, -3.93403e-08, 0, 0, 0, 0.9, 0, 0.245, 0)
+shape = SubResource("CapsuleShape3D_vaieb")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="CollisionShape3D"]
+radius = 2.0
+avoidance_layers = 3
+
+[node name="Body" parent="." instance=ExtResource("4_1i6hh")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+
+[node name="CombatComponent" parent="." instance=ExtResource("6_iyp1i")]
+transform = Transform3D(0.996046, 0, 0, 0, 0.996046, 0, 0, 0, 0.996046, 0, 0, 0)
+PROJECTILE = ExtResource("7_devjo")
+
+[node name="Turret" parent="." instance=ExtResource("7_pr8ns")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)

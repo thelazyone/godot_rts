@@ -17,10 +17,7 @@ func _ready():
 	m_UnitsControlNode.aim_order.connect(shoot_area) # TODO TEST TBR
 	
 	add_tank(4,4)
-	add_tank(2,4)
-	add_tank(0,4)
-	add_tank(-2,4)
-	add_tank(-4,4)
+	add_worker(-4,4)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,6 +27,12 @@ func _process(delta):
 
 func add_tank(x, y): # Clearly temp:
 	var new_tank = preload("res://Components/tank.tscn").instantiate()
+	new_tank.position.x = x
+	new_tank.position.z = y
+	add_child(new_tank)
+	
+func add_worker(x, y): # Clearly temp:
+	var new_tank = preload("res://Components/worker.tscn").instantiate()
 	new_tank.position.x = x
 	new_tank.position.z = y
 	add_child(new_tank)
