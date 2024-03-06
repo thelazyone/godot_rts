@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://ObjectsScripts/CameraBase.gd" id="1_a4iqy"]
 [ext_resource type="Script" path="res://world.gd" id="1_gmsn8"]
-[ext_resource type="Script" path="res://ObjectsScripts/RectSelection.gd" id="2_qyexx"]
+[ext_resource type="Script" path="res://ObjectsScripts/UnitsControl.gd" id="2_qyexx"]
 [ext_resource type="Shader" path="res://Shaders/edge_shader_cberry22.gdshader" id="3_bxj61"]
 [ext_resource type="Script" path="res://Actors.gd" id="3_u47dp"]
 [ext_resource type="PackedScene" uid="uid://lfio3y5xh11s" path="res://Components/cube_obstacle.tscn" id="4_d1p21"]
@@ -106,8 +106,8 @@ offset_top = 902.0
 offset_right = 128.0
 offset_bottom = 943.0
 pivot_offset = Vector2(64, 26)
-toggle_mode = true
-text = "Aggressive
+text = "Build
+Plant
 "
 
 [node name="Build Factory" type="Button" parent="UnitsControl"]
@@ -116,7 +116,9 @@ offset_top = 902.0
 offset_right = 248.0
 offset_bottom = 943.0
 pivot_offset = Vector2(64, 26)
-text = "Area Atk"
+text = "Build
+Factory
+"
 
 [node name="Add Worker" type="Button" parent="UnitsControl"]
 offset_left = 261.0
@@ -124,7 +126,8 @@ offset_top = 902.0
 offset_right = 369.0
 offset_bottom = 943.0
 pivot_offset = Vector2(64, 26)
-text = "Stop
+text = "Add
+Worker
 "
 
 [node name="Actors" type="Node3D" parent="."]
@@ -145,3 +148,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[connection signal="pressed" from="UnitsControl/Build Plant" to="UnitsControl" method="_on_build_plant_pressed"]
+[connection signal="pressed" from="UnitsControl/Build Factory" to="UnitsControl" method="_on_build_factory_pressed"]
+[connection signal="pressed" from="UnitsControl/Add Worker" to="UnitsControl" method="_on_add_worker_pressed"]

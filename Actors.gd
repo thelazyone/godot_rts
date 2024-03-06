@@ -14,15 +14,16 @@ var tanks = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	# Active actors orders
 	m_UnitsControlNode.movement_order.connect(go_to)
 	m_UnitsControlNode.area_selected.connect(select_actors)
 	#m_UnitsControlNode.aim_order.connect(aim_to) # TODO DECOMMENT
 	m_UnitsControlNode.aim_order.connect(shoot_area) # TODO TEST TBR
 	
-	# TEMP, to be removed from here
-	add_worker(-4,4)
-	add_worker(-3,4)
-	add_worker(-5,4)
+	# Building orders
+	m_UnitsControlNode.build_worker_order.connect(add_worker)
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,19 +31,7 @@ func _process(delta):
 	pass
 
 
-func add_tank(x, y): # Clearly temp:
-	var new_tank = preload("res://Components/tank.tscn").instantiate()
-	new_tank.position.x = x
-	new_tank.position.z = y
-	adjust_materials(new_tank)
-	add_child(new_tank)
-	
-func add_worker(x, y): # Clearly temp:
-	var new_worker = preload("res://Components/worker.tscn").instantiate()
-	new_worker.position.x = x
-	new_worker.position.z = y
-	adjust_materials(new_worker)
-	add_child(new_worker)
+
 
 
 # Callbacks
@@ -94,9 +83,27 @@ func shoot_area(coordinate):
 			child.combat_stop()
 
 
+# Build commands
+
+func add_worker(coordinate):
+	print("calling ADD WORKER for ", coordinate)
+	var new_worker = preload("res://Components/worker.tscn").instantiate()
+	new_worker.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
+	adjust_materials(new_worker)
+	add_child(new_worker)
+	
+func add_tank(coordinate): # Clearly temp:
+	var new_tank = preload("res://Components/tank.tscn").instantiate()
+	new_tank.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
+	adjust_materials(new_tank)
+	add_child(new_tank)
 
 
-# TEMP POSSIBLY TBR?
+
+
+
+# Sets the general reflection of the meshes of the created actors. 
+# Might benefit being in a separate object. For now let's keep it here.
 func adjust_materials(node):
 
 	var desired_roughness = 1 - SHINE_FACTOR
