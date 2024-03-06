@@ -11,12 +11,12 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qdle"]
 render_priority = 0
 shader = ExtResource("3_bxj61")
-shader_parameter/depth_threshold = 0.05
-shader_parameter/normal_threshold = 0.743
-shader_parameter/darken_amount = 0.0
-shader_parameter/lighten_amount = 2.94
+shader_parameter/depth_threshold = 0.468
+shader_parameter/normal_threshold = 0.578
+shader_parameter/darken_amount = 0.03
+shader_parameter/lighten_amount = 1.73
 shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
-shader_parameter/edge_scale = 1.0
+shader_parameter/edge_scale = 1.761
 
 [sub_resource type="QuadMesh" id="QuadMesh_q20lf"]
 material = SubResource("ShaderMaterial_4qdle")
@@ -45,7 +45,7 @@ border_color = Color(0, 0.317647, 0.968627, 0.0980392)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t1dld"]
 shader = ExtResource("6_vjooq")
-shader_parameter/pixelSize = 2
+shader_parameter/pixelSize = 3
 shader_parameter/pixelOffset = Vector2(0, 0)
 shader_parameter/colorRange = 26
 shader_parameter/hardness = 0.753
@@ -76,7 +76,7 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 mesh = SubResource("PlaneMesh_twrfu")
 
 [node name="Cube" type="MeshInstance3D" parent="Environment"]
-transform = Transform3D(0.99997, -0.00310444, 0.00710911, 0.0032272, 0.999845, -0.0173201, -0.00705423, 0.0173425, 0.999825, 0, 0.5, 0)
+transform = Transform3D(0.866026, 0.0087262, 0.499924, 0, 0.999848, -0.0174524, -0.5, 0.0151142, 0.865894, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_mbfrx")
 skeleton = NodePath("../Plane")
 
@@ -135,6 +135,7 @@ script = ExtResource("3_u47dp")
 
 [node name="Pixelation" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+visible = false
 script = ExtResource("6_l4fd8")
 
 [node name="PixelScreen" type="ColorRect" parent="Pixelation"]

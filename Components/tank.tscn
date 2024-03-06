@@ -11,12 +11,12 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vaieb"]
 
 [node name="Tank" type="CharacterBody3D"]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
 axis_lock_linear_y = true
 safe_margin = 0.1
 script = ExtResource("1_lgp2k")
 
 [node name="MoveComponent" parent="." instance=ExtResource("2_3ctpl")]
+transform = Transform3D(0.9965, 0, 0, 0, 0.9965, 0, 0, 0, 0.9965, 0, 0, 0)
 SPEED = 200
 ROT_SPEED = 5
 MIN_ANGLE_MOVE = 0.785
@@ -48,4 +48,5 @@ mesh = ExtResource("5_dmnl2")
 skeleton = NodePath("")
 
 [node name="CombatComponent" parent="." instance=ExtResource("6_w7mpt")]
+transform = Transform3D(0.996046, 0, 0, 0, 0.996046, 0, 0, 0, 0.996046, 0, 0, 0)
 PROJECTILE = ExtResource("7_bsw0w")
