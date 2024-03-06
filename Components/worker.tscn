@@ -23,7 +23,9 @@ ROT_SPEED = 5
 MIN_ANGLE_MOVE = 0.785
 
 [node name="Selected" parent="." instance=ExtResource("3_b2r0f")]
+transform = Transform3D(0.2, 3.49691e-08, 0, 1.52855e-15, -8.74228e-09, -0.2, -3.49691e-08, 0.2, -8.74228e-09, 0, 0.02, 0)
 visible = false
+layers = 513
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-3.93403e-08, -0.9, 0, 0.9, -3.93403e-08, 0, 0, 0, 0.9, 0, 0.245, 0)
