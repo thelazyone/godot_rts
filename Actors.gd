@@ -1,5 +1,8 @@
 extends Node3D
 
+# Shine Factor
+@export var SHINE_FACTOR = 0.6
+
 # Creating a reference to the other useful parts. The @onready holds the definition until the 
 # _ready function has been called and the system initialized.
 @onready var m_UnitsControlNode = get_node("../UnitsControl")
@@ -16,8 +19,10 @@ func _ready():
 	#m_UnitsControlNode.aim_order.connect(aim_to) # TODO DECOMMENT
 	m_UnitsControlNode.aim_order.connect(shoot_area) # TODO TEST TBR
 	
-	add_tank(4,4)
+	# TEMP, to be removed from here
 	add_worker(-4,4)
+	add_worker(-3,4)
+	add_worker(-5,4)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,13 +34,15 @@ func add_tank(x, y): # Clearly temp:
 	var new_tank = preload("res://Components/tank.tscn").instantiate()
 	new_tank.position.x = x
 	new_tank.position.z = y
+	adjust_materials(new_tank)
 	add_child(new_tank)
 	
 func add_worker(x, y): # Clearly temp:
-	var new_tank = preload("res://Components/worker.tscn").instantiate()
-	new_tank.position.x = x
-	new_tank.position.z = y
-	add_child(new_tank)
+	var new_worker = preload("res://Components/worker.tscn").instantiate()
+	new_worker.position.x = x
+	new_worker.position.z = y
+	adjust_materials(new_worker)
+	add_child(new_worker)
 
 
 # Callbacks
@@ -89,9 +96,28 @@ func shoot_area(coordinate):
 
 
 
+# TEMP POSSIBLY TBR?
+func adjust_materials(node):
 
+	var desired_roughness = 1 - SHINE_FACTOR
+	var desired_specular = 0
 
-
+	if node is MeshInstance3D and node.material_override is StandardMaterial3D:
+		var material = node.material_override as StandardMaterial3D
+		material.roughness = desired_roughness
+		material.specular = desired_specular
+	elif node is MeshInstance3D:
+		var mesh = node.mesh
+		if mesh:
+			for i in range(mesh.get_surface_count()):
+				var material = mesh.surface_get_material(i)
+				if material and material is StandardMaterial3D:
+					material.roughness = desired_roughness
+					material.specular = desired_specular
+				
+	# Recursively adjust materials for all children of the current node
+	for child in node.get_children():
+		adjust_materials(child)
 
 
 
