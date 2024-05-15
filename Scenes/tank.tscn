@@ -1,27 +1,27 @@
 [gd_scene load_steps=9 format=3 uid="uid://bgn8ry1b1ul4g"]
 
-[ext_resource type="Script" path="res://Components/tank.gd" id="1_lgp2k"]
-[ext_resource type="PackedScene" uid="uid://5s3rcge75d24" path="res://Components/move_component.tscn" id="2_3ctpl"]
-[ext_resource type="PackedScene" uid="uid://dl5dd1ep5aybv" path="res://Components/selected_sprite.tscn" id="4_f5atu"]
-[ext_resource type="ArrayMesh" uid="uid://bpqfdjdjpgen" path="res://Assets/tank_body.obj" id="4_vfhmk"]
-[ext_resource type="ArrayMesh" uid="uid://clanxoagqv7bw" path="res://Assets/tank_turret.obj" id="5_dmnl2"]
-[ext_resource type="PackedScene" uid="uid://t4mkrwhanp2b" path="res://Components/combat_component.tscn" id="6_w7mpt"]
-[ext_resource type="PackedScene" uid="uid://bqkagvogq0l1r" path="res://Components/gun_shell.tscn" id="7_bsw0w"]
+[ext_resource type="Script" path="res://Scenes/tank.gd" id="1_aptwx"]
+[ext_resource type="PackedScene" uid="uid://5s3rcge75d24" path="res://Scenes/move_component.tscn" id="2_jagkv"]
+[ext_resource type="PackedScene" uid="uid://dl5dd1ep5aybv" path="res://Scenes/selected_sprite.tscn" id="3_mvs6w"]
+[ext_resource type="ArrayMesh" uid="uid://bpqfdjdjpgen" path="res://Assets/tank_body.obj" id="4_lt25l"]
+[ext_resource type="ArrayMesh" uid="uid://clanxoagqv7bw" path="res://Assets/tank_turret.obj" id="5_kyvg7"]
+[ext_resource type="PackedScene" uid="uid://t4mkrwhanp2b" path="res://Scenes/combat_component.tscn" id="6_8u1pi"]
+[ext_resource type="PackedScene" uid="uid://bqkagvogq0l1r" path="res://Scenes/gun_shell.tscn" id="7_pxw2g"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vaieb"]
 
 [node name="Tank" type="CharacterBody3D"]
 axis_lock_linear_y = true
 safe_margin = 0.1
-script = ExtResource("1_lgp2k")
+script = ExtResource("1_aptwx")
 
-[node name="MoveComponent" parent="." instance=ExtResource("2_3ctpl")]
+[node name="MoveComponent" parent="." instance=ExtResource("2_jagkv")]
 transform = Transform3D(0.9965, 0, 0, 0, 0.9965, 0, 0, 0, 0.9965, 0, 0, 0)
 SPEED = 200
 ROT_SPEED = 5
 MIN_ANGLE_MOVE = 0.785
 
-[node name="Selected" parent="." instance=ExtResource("4_f5atu")]
+[node name="Selected" parent="." instance=ExtResource("3_mvs6w")]
 visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -36,7 +36,7 @@ avoidance_layers = 3
 
 [node name="Body" type="MeshInstance3D" parent="Body"]
 transform = Transform3D(-0.05, 0, -4.37114e-09, 0, 0.05, 0, 4.37114e-09, 0, -0.05, 0, 0, 0)
-mesh = ExtResource("4_vfhmk")
+mesh = ExtResource("4_lt25l")
 skeleton = NodePath("../../..")
 
 [node name="Turret" type="Node3D" parent="."]
@@ -44,9 +44,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.223838, 0.564484, 0)
 
 [node name="Turret" type="MeshInstance3D" parent="Turret"]
 transform = Transform3D(-0.05, 0, 4.37114e-09, 0, 0.05, 0, -4.37114e-09, 0, -0.05, 0.226433, -0.569538, -8.53858e-07)
-mesh = ExtResource("5_dmnl2")
+mesh = ExtResource("5_kyvg7")
 skeleton = NodePath("")
 
-[node name="CombatComponent" parent="." instance=ExtResource("6_w7mpt")]
+[node name="CombatComponent" parent="." instance=ExtResource("6_8u1pi")]
 transform = Transform3D(0.996046, 0, 0, 0, 0.996046, 0, 0, 0, 0.996046, 0, 0, 0)
-PROJECTILE = ExtResource("7_bsw0w")
+PROJECTILE = ExtResource("7_pxw2g")

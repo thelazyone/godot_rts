@@ -1,3 +1,5 @@
+# Global utility functions for geometry.
+
 extends Node
 
 # Temp function, i'm sure there's a prebuild one.

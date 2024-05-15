@@ -1,12 +1,12 @@
 [gd_scene load_steps=15 format=3 uid="uid://by6usbkw54p0d"]
 
-[ext_resource type="Script" path="res://ObjectsScripts/CameraBase.gd" id="1_a4iqy"]
-[ext_resource type="Script" path="res://world.gd" id="1_gmsn8"]
-[ext_resource type="Script" path="res://ObjectsScripts/UnitsControl.gd" id="2_qyexx"]
+[ext_resource type="Script" path="res://Base Components Scripts/CameraBase.gd" id="1_a4iqy"]
+[ext_resource type="Script" path="res://Base Components Scripts/world.gd" id="1_gmsn8"]
+[ext_resource type="Script" path="res://Base Components Scripts/UnitsControl.gd" id="2_qyexx"]
 [ext_resource type="Shader" path="res://Shaders/edge_shader_cberry22.gdshader" id="3_bxj61"]
-[ext_resource type="Script" path="res://Actors.gd" id="3_u47dp"]
-[ext_resource type="PackedScene" uid="uid://lfio3y5xh11s" path="res://Components/cube_obstacle.tscn" id="4_d1p21"]
-[ext_resource type="Script" path="res://Pixelation.gd" id="6_l4fd8"]
+[ext_resource type="Script" path="res://Base Components Scripts/Actors.gd" id="3_u47dp"]
+[ext_resource type="PackedScene" uid="uid://lfio3y5xh11s" path="res://Scenes/cube_obstacle.tscn" id="4_d1p21"]
+[ext_resource type="Script" path="res://Scenes/Pixelation.gd" id="6_l4fd8"]
 [ext_resource type="Shader" path="res://Shaders/pixel_1.gdshader" id="6_vjooq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4qdle"]

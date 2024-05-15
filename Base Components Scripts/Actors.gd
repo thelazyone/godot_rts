@@ -1,40 +1,41 @@
+# Handles the instancing of all the entities in the game. Mostly Units, Terrain and Bullets.
+#
+# TODO: as a Hack, i'm currently overwriting some properties of the meshes (the shine in particular)
+# and since I'm doing that right before instantiating them I'm doing that here. It's dirty.
 extends Node3D
 
-# Shine Factor
-@export var SHINE_FACTOR = 0.6
 
 # Creating a reference to the other useful parts. The @onready holds the definition until the 
 # _ready function has been called and the system initialized.
 @onready var m_UnitsControlNode = get_node("../UnitsControl")
 @onready var m_Camera = get_node("../CameraBase")
 
-#func ProjectOnPlane(coords2D):
-	#return Vector3(coords2D.x, 0, coords2D.y)
-var tanks = []
 
 # Called when the node enters the scene tree for the first time.
+# TODO Note that some comands are still to be implemented.
 func _ready():
 	
 	# Active actors orders
 	m_UnitsControlNode.movement_order.connect(go_to)
 	m_UnitsControlNode.area_selected.connect(select_actors)
 	#m_UnitsControlNode.aim_order.connect(aim_to) # TODO DECOMMENT
-	m_UnitsControlNode.aim_order.connect(shoot_area) # TODO TEST TBR
+	m_UnitsControlNode.aim_order.connect(shoot_area) # TO BE REMOVED TODO -> use the one above!
 	
 	# Building orders
 	m_UnitsControlNode.build_worker_order.connect(add_worker)
-	
+	#m_UnitsControlNode.build_tank_order.connect(add_tank) # TODO DECOMMENT
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# Nothing to do here.
 	pass
 
 
+# All Commands go through this node, because it is the only one to have a list
+# of All the actors. 
 
-
-
-# Callbacks
+# Units Commands
 func go_to(coordinate):
 	
 	# First calculating the amount of elements to move:
@@ -49,9 +50,7 @@ func go_to(coordinate):
 	
 	plane_baricenter = plane_baricenter / total_elements
 	
-	# Creating a grid of positions to reach:
-	#var 
-	# TODO
+	# TODO implement a better group pathfinding.
 	
 	# TODO move the units in a grid 
 	for child in get_children():
@@ -82,25 +81,25 @@ func shoot_area(coordinate):
 		else:
 			child.combat_stop()
 
-
 # Build commands
-
 func add_worker(coordinate):
 	print("calling ADD WORKER for ", coordinate)
-	var new_worker = preload("res://Components/worker.tscn").instantiate()
+	var new_worker = preload("res://Scenes/worker.tscn").instantiate()
 	new_worker.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
 	adjust_materials(new_worker)
 	add_child(new_worker)
 	
 func add_tank(coordinate): # Clearly temp:
-	var new_tank = preload("res://Components/tank.tscn").instantiate()
+	var new_tank = preload("res://Scenes/tank.tscn").instantiate()
 	new_tank.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
 	adjust_materials(new_tank)
 	add_child(new_tank)
 
 
+# Shine Material adjustment. It should NOT be here. TODO.
 
-
+# Shine Factor
+@export var SHINE_FACTOR = 0.6
 
 # Sets the general reflection of the meshes of the created actors. 
 # Might benefit being in a separate object. For now let's keep it here.

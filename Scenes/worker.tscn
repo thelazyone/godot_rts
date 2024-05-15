@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://cieode54cqvbx"]
 
-[ext_resource type="Script" path="res://Components/tank.gd" id="1_xmyou"]
-[ext_resource type="PackedScene" uid="uid://5s3rcge75d24" path="res://Components/move_component.tscn" id="2_n6t3f"]
-[ext_resource type="PackedScene" uid="uid://dl5dd1ep5aybv" path="res://Components/selected_sprite.tscn" id="3_b2r0f"]
-[ext_resource type="PackedScene" uid="uid://b256cjygw4p6" path="res://Assets/Worker/worker.glb" id="4_1i6hh"]
-[ext_resource type="PackedScene" uid="uid://t4mkrwhanp2b" path="res://Components/combat_component.tscn" id="6_iyp1i"]
-[ext_resource type="PackedScene" uid="uid://b37e5dvbs8aos" path="res://Assets/Worker/head.glb" id="7_pr8ns"]
+[ext_resource type="Script" path="res://Scenes/tank.gd" id="1_4p8ys"]
+[ext_resource type="PackedScene" uid="uid://5s3rcge75d24" path="res://Scenes/move_component.tscn" id="2_f0lul"]
+[ext_resource type="PackedScene" uid="uid://dl5dd1ep5aybv" path="res://Scenes/selected_sprite.tscn" id="3_ey1y0"]
+[ext_resource type="PackedScene" uid="uid://b256cjygw4p6" path="res://Assets/Worker/worker.glb" id="4_sh30b"]
+[ext_resource type="PackedScene" uid="uid://t4mkrwhanp2b" path="res://Scenes/combat_component.tscn" id="5_6lbpr"]
+[ext_resource type="PackedScene" uid="uid://b37e5dvbs8aos" path="res://Assets/Worker/head.glb" id="6_2pdle"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vaieb"]
 height = 1.02324
@@ -13,15 +13,15 @@ height = 1.02324
 [node name="Worker" type="CharacterBody3D"]
 axis_lock_linear_y = true
 safe_margin = 0.1
-script = ExtResource("1_xmyou")
+script = ExtResource("1_4p8ys")
 
-[node name="MoveComponent" parent="." instance=ExtResource("2_n6t3f")]
+[node name="MoveComponent" parent="." instance=ExtResource("2_f0lul")]
 transform = Transform3D(0.9965, 0, 0, 0, 0.9965, 0, 0, 0, 0.9965, 0, 0, 0)
 SPEED = 120
 ROT_SPEED = 8
 MIN_ANGLE_MOVE = 0.785
 
-[node name="Selected" parent="." instance=ExtResource("3_b2r0f")]
+[node name="Selected" parent="." instance=ExtResource("3_ey1y0")]
 transform = Transform3D(0.2, 3.49691e-08, 0, 1.52855e-15, -8.74228e-09, -0.2, -3.49691e-08, 0.2, -8.74228e-09, 0, 0.02, 0)
 visible = false
 
@@ -33,12 +33,12 @@ shape = SubResource("CapsuleShape3D_vaieb")
 radius = 2.0
 avoidance_layers = 3
 
-[node name="Body" parent="." instance=ExtResource("4_1i6hh")]
+[node name="Body" parent="." instance=ExtResource("4_sh30b")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
-[node name="CombatComponent" parent="." instance=ExtResource("6_iyp1i")]
+[node name="CombatComponent" parent="." instance=ExtResource("5_6lbpr")]
 transform = Transform3D(0.996046, 0, 0, 0, 0.996046, 0, 0, 0, 0.996046, 0, 0, 0)
 ROT_SPEED = 3
 
-[node name="Turret" parent="." instance=ExtResource("7_pr8ns")]
+[node name="Turret" parent="." instance=ExtResource("6_2pdle")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.52359, 0)
