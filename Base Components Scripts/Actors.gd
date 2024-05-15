@@ -18,16 +18,17 @@ func _ready():
 	# Active actors orders
 	m_UnitsControlNode.movement_order.connect(go_to)
 	m_UnitsControlNode.area_selected.connect(select_actors)
-	#m_UnitsControlNode.aim_order.connect(aim_to) # TODO DECOMMENT
-	m_UnitsControlNode.aim_order.connect(shoot_area) # TO BE REMOVED TODO -> use the one above!
+	m_UnitsControlNode.aim_order.connect(aim_to)
 	
-	# Building orders
+	# Building Units orders
 	m_UnitsControlNode.build_worker_order.connect(add_worker)
-	#m_UnitsControlNode.build_tank_order.connect(add_tank) # TODO DECOMMENT
+	# m_UnitsControlNode.build_tank_order.connect(add_tank) ##TODO DECOMMENT
+	m_UnitsControlNode.build_factory_order.connect(build_factory)
+	m_UnitsControlNode.build_plant_order.connect(build_plant)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	# Nothing to do here.
 	pass
 
@@ -66,34 +67,55 @@ func select_actors(start, end):
 			# STUPID method, clearly not the correct one.
 			var select_value = child.position.x > plane_start.x and child.position.x < plane_end.x and child.position.z > plane_start.y and child.position.z < plane_end.y
 			child.select(select_value)
-			
+
+
 func aim_to(coordinate):
 	for child in get_children():
-		if "is_selected" in child and child.is_selected:
-			child.combat_aim(m_Camera.coords_on_xz(coordinate))
-		else:
-			child.combat_stop()
+		if child.has_node("CombatComponent"):
+			if "is_selected" in child and child.is_selected:
+				child.combat_aim(m_Camera.coords_on_xz(coordinate))
+			else:
+				child.combat_stop()
+
 
 func shoot_area(coordinate):
 	for child in get_children():
-		if "is_selected" in child and child.is_selected:
-			child.combat_attack_area(m_Camera.coords_on_xz(coordinate))
-		else:
-			child.combat_stop()
+		if child.has_node("CombatComponent"):
+			if "is_selected" in child and child.is_selected:
+				child.combat_attack_area(m_Camera.coords_on_xz(coordinate))
+			else:
+				child.combat_stop()
 
-# Build commands
+
+# Build Units commands
 func add_worker(coordinate):
 	print("calling ADD WORKER for ", coordinate)
 	var new_worker = preload("res://Scenes/worker.tscn").instantiate()
 	new_worker.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
 	adjust_materials(new_worker)
 	add_child(new_worker)
-	
+
+
 func add_tank(coordinate): # Clearly temp:
 	var new_tank = preload("res://Scenes/tank.tscn").instantiate()
 	new_tank.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
 	adjust_materials(new_tank)
 	add_child(new_tank)
+
+
+# Build Buildings commands
+func build_factory(coordinate): 
+	var new_fact = preload("res://Scenes/factory.tscn").instantiate()
+	new_fact.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
+	adjust_materials(new_fact)
+	add_child(new_fact)
+
+
+func build_plant(coordinate): 
+	var new_plant = preload("res://Scenes/plant.tscn").instantiate()
+	new_plant.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
+	adjust_materials(new_plant)
+	add_child(new_plant)
 
 
 # Shine Material adjustment. It should NOT be here. TODO.

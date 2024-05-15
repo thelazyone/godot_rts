@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcxls8b6uefbd"]
+
+[ext_resource type="Script" path="res://Scenes/factory.gd" id="1_ypfw5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b3pg7"]
+size = Vector3(2, 1.4126, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wtneo"]
+
+[node name="Factory" type="StaticBody3D"]
+script = ExtResource("1_ypfw5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.989774, 0, 0, 0, 0.989774, 0, 0, 0, 0.989774, 0, 0.693183, 0)
+shape = SubResource("BoxShape3D_b3pg7")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="CollisionShape3D"]
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="Model" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1.93888, 0, 0, 0, 1.434, 0, 0, 0, 1.92779, 0, 0.722722, 0)
+mesh = SubResource("BoxMesh_wtneo")
