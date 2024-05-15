@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://5s3rcge75d24" path="res://Components/move_component.tscn" id="2_3ctpl"]
 [ext_resource type="PackedScene" uid="uid://dl5dd1ep5aybv" path="res://Components/selected_sprite.tscn" id="4_f5atu"]
 [ext_resource type="ArrayMesh" uid="uid://bpqfdjdjpgen" path="res://Assets/tank_body.obj" id="4_vfhmk"]
-[ext_resource type="ArrayMesh" uid="uid://chyavq22mt3um" path="res://Assets/tank_turret.obj" id="5_dmnl2"]
+[ext_resource type="ArrayMesh" uid="uid://clanxoagqv7bw" path="res://Assets/tank_turret.obj" id="5_dmnl2"]
 [ext_resource type="PackedScene" uid="uid://t4mkrwhanp2b" path="res://Components/combat_component.tscn" id="6_w7mpt"]
 [ext_resource type="PackedScene" uid="uid://bqkagvogq0l1r" path="res://Components/gun_shell.tscn" id="7_bsw0w"]
 

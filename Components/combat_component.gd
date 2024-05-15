@@ -71,11 +71,17 @@ func _process(delta):
 	
 # Shooting at target with scatter. Spawns a projectile that will then behave as it should.
 func _shoot(target):
-	var new_projectile = PROJECTILE.instantiate()
-	new_projectile.position = position
-	new_projectile.set_target(plane_position + turret_plane_position, target, HIT_DEVIATION)
-	new_projectile.set_shell_offset(get_node("../Turret").position)
-	add_child(new_projectile)
+	
+	# If projectile is missing, ignoring
+	if PROJECTILE: 
+		
+	
+		var new_projectile = PROJECTILE.instantiate()
+		new_projectile.position = position
+		new_projectile.set_target(plane_position + turret_plane_position, target, HIT_DEVIATION)
+		new_projectile.set_shell_offset(get_node("../Turret").position)
+		add_child(new_projectile)
+		
 	pass
 
 # State commands

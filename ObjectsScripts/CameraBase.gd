@@ -1,3 +1,9 @@
+# 2.5D camera, moving along Y plane (Godot's Y is "up")
+# Handles the conversion between the actual positions and the XZ 2D coordinates
+# 
+# Also handles the WASD inputs which move the camera. -> This might be moved
+# into a dedicated entity soon, for a cleaner division of roles. TODO!
+
 extends Node3D
 
 var pixelOffset = Vector2(0.0, 0.0)
