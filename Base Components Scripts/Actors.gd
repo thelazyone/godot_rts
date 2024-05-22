@@ -92,14 +92,15 @@ func add_worker(coordinate):
 	print("calling ADD WORKER for ", coordinate)
 	var new_worker = preload("res://Scenes/worker.tscn").instantiate()
 	new_worker.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
-	adjust_materials(new_worker)
+	adjust_materials(new_worker, 0.0)
 	add_child(new_worker)
+	add_tank(coordinate)
 
 
 func add_tank(coordinate): # Clearly temp:
 	var new_tank = preload("res://Scenes/tank.tscn").instantiate()
 	new_tank.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
-	adjust_materials(new_tank)
+	adjust_materials(new_tank, 0.25)
 	add_child(new_tank)
 
 
@@ -107,14 +108,14 @@ func add_tank(coordinate): # Clearly temp:
 func build_factory(coordinate): 
 	var new_fact = preload("res://Scenes/factory.tscn").instantiate()
 	new_fact.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
-	adjust_materials(new_fact)
+	adjust_materials(new_fact, 0.)
 	add_child(new_fact)
 
 
 func build_plant(coordinate): 
 	var new_plant = preload("res://Scenes/plant.tscn").instantiate()
 	new_plant.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
-	adjust_materials(new_plant)
+	adjust_materials(new_plant, 0.)
 	add_child(new_plant)
 
 
@@ -125,15 +126,22 @@ func build_plant(coordinate):
 
 # Sets the general reflection of the meshes of the created actors. 
 # Might benefit being in a separate object. For now let's keep it here.
-func adjust_materials(node):
+func adjust_materials(node, lightness_factor : float = 0.0):
 
-	var desired_roughness = 1 - SHINE_FACTOR
-	var desired_specular = 0
+	var desired_roughness = 1. - SHINE_FACTOR
+	var desired_specular = 0.
 
-	if node is MeshInstance3D and node.material_override is StandardMaterial3D:
-		var material = node.material_override as StandardMaterial3D
+	if node is MeshInstance3D and node.get_active_material(0) is StandardMaterial3D:
+		var material = node.get_active_material(0) as StandardMaterial3D
+		print("Setting roughness to", desired_roughness)
 		material.roughness = desired_roughness
 		material.specular = desired_specular
+				#material.albedo_color = Color(1,1,1,1)
+		if lightness_factor>0.1 :
+			print("Increasing emission to ", lightness_factor, "for ", node)
+			material.emission_enabled = true
+			material.emission = Color(lightness_factor,lightness_factor,lightness_factor,1)
+			
 	elif node is MeshInstance3D:
 		var mesh = node.mesh
 		if mesh:
@@ -145,7 +153,7 @@ func adjust_materials(node):
 				
 	# Recursively adjust materials for all children of the current node
 	for child in node.get_children():
-		adjust_materials(child)
+		adjust_materials(child, lightness_factor)
 
 
 

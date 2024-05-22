@@ -58,6 +58,7 @@ script = ExtResource("1_a4iqy")
 [node name="Camera3D" type="Camera3D" parent="CameraBase"]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 9.11868, 8.79231)
 projection = 1
+current = true
 size = 10.0
 
 [node name="ToonShader" type="MeshInstance3D" parent="CameraBase/Camera3D"]

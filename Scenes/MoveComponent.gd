@@ -112,7 +112,6 @@ func _update_transforms():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	plane_position = Vector2(get_parent().position.x, get_parent().position.z)
-	print("Setting up tank at ", plane_position)
 
 
 # Public Functions Here
