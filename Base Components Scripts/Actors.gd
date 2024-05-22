@@ -22,7 +22,7 @@ func _ready():
 	
 	# Building Units orders
 	m_UnitsControlNode.build_worker_order.connect(add_worker)
-	# m_UnitsControlNode.build_tank_order.connect(add_tank) ##TODO DECOMMENT
+	m_UnitsControlNode.build_tank_order.connect(add_tank)
 	m_UnitsControlNode.build_factory_order.connect(build_factory)
 	m_UnitsControlNode.build_plant_order.connect(build_plant)
 
@@ -94,7 +94,6 @@ func add_worker(coordinate):
 	new_worker.position = Geometry.plane_to_space(m_Camera.coords_on_xz(coordinate))
 	adjust_materials(new_worker, 0.0)
 	add_child(new_worker)
-	add_tank(coordinate)
 
 
 func add_tank(coordinate): # Clearly temp:
@@ -120,7 +119,6 @@ func build_plant(coordinate):
 
 
 # Shine Material adjustment. It should NOT be here. TODO.
-
 # Shine Factor
 @export var SHINE_FACTOR = 0.6
 

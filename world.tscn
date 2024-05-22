@@ -131,6 +131,16 @@ text = "Add
 Worker
 "
 
+[node name="Add Tank" type="Button" parent="UnitsControl"]
+offset_left = 522.0
+offset_top = 1804.0
+offset_right = 630.0
+offset_bottom = 1858.0
+pivot_offset = Vector2(64, 26)
+text = "Add
+Worker
+"
+
 [node name="Actors" type="Node3D" parent="."]
 script = ExtResource("3_u47dp")
 SHINE_FACTOR = 0.93
@@ -150,6 +160,18 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Add Worker" type="Button" parent="."]
+offset_left = 383.0
+offset_top = 902.0
+offset_right = 491.0
+offset_bottom = 956.0
+pivot_offset = Vector2(64, 26)
+text = "Add
+Tank
+"
+
 [connection signal="pressed" from="UnitsControl/Build Plant" to="UnitsControl" method="_on_build_plant_pressed"]
 [connection signal="pressed" from="UnitsControl/Build Factory" to="UnitsControl" method="_on_build_factory_pressed"]
 [connection signal="pressed" from="UnitsControl/Add Worker" to="UnitsControl" method="_on_add_worker_pressed"]
+[connection signal="pressed" from="UnitsControl/Add Tank" to="UnitsControl" method="_on_add_worker_pressed"]
+[connection signal="pressed" from="Add Worker" to="UnitsControl" method="_on_add_tank_pressed"]
